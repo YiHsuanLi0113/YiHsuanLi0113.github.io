@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-##紀錄學習點滴
+## 紀錄學習點滴
 
 ### 2018.05.12 - First Time to Use Github Page
 
@@ -9,6 +9,10 @@ Now my page's done.
 I'm so excited and look forward to use it to record my learning about programming.
 
 Howerer, I have to learn how to use "Markdown" to write down the article.@_@
+
+### UI 好用網站懶人包
+
+1.今天在研究這個jekyll theme，發現這個好用的網站[DEVICON](http://konpa.github.io/devicon/). 
 
 ### Markdown
 
@@ -35,10 +39,4 @@ Console.WriteLine("Hello World");
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/YiHsuanLi0113/yihsuanli0113.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
