@@ -11,8 +11,9 @@ Howerer, I have to learn how to use "Markdown" to write down the article.@_@
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
+```csharp
 Syntax highlighted code block
+Console.WriteLine("Hello World");
 
 # Header 1
 ## Header 2
