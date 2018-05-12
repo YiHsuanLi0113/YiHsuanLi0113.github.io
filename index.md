@@ -1,4 +1,7 @@
-## 2018.05.12 - First Time to Use Github Page
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+##紀錄學習點滴
+
+### 2018.05.12 - First Time to Use Github Page
 
 Today is my first time to use Github Page. 
 I spent all afternoon studying using it. 
