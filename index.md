@@ -1,8 +1,11 @@
-## Welcome to GitHub Pages
+## 2018.05.12 - First Time to Use Github Page
 
-You can use the [editor on GitHub](https://github.com/YiHsuanLi0113/yihsuanli0113.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+Today is my first time to use Github Page. 
+I spent all afternoon studying using it. 
+Now my page's done.
+I'm so excited and look forward to use it to record my learning about programming.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Howerer, I have to learn how to use "Markdown" to write down the article.@_@
 
 ### Markdown
 
