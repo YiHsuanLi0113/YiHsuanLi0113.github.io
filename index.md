@@ -30,6 +30,73 @@
     
 ◆ 弱型別：以object當變數型別、無法明確表達runtime變數型別者皆屬之
 
+### ADO.NET
+
+簡介：
+
+* 分為Connneted Data Source及Disconnected Data Model
+
+* 不同的資料存取區，會有不同的資料提供者 
+
+  * SQL Server原生資料來源-System.Data.SqlClient    
+  * OLE DB資料來源-System.Data.OleDb      
+  * Oracle資料來源-System.Data.OracleClient      
+  * ODBC資料來源-System.DataOdbc
+  
+* 使用同一個連線字串建立連線時，系統會至ThreadPool取得連線物件，減少另外建立連線資源消耗
+
+```csharp
+SqlConnetction con = new SqlConnection();
+con.ConnectionString = @"Data Source=資料庫IP; Initial Catalog=資料庫名稱; User ID=登入ID; Password=登入密碼;";
+```
+
+Example :
+
+
+```csharp
+protected SqlConnection CreateConnection()
+{
+  SqlConnetction con = new SqlConnection();
+  con.ConnectionString = @"Data Source=資料庫IP; Initial Catalog=資料庫名稱; User ID=登入ID; Password=登入密碼;";
+  
+  return con;
+}
+
+protected void btnCreateConnection_Click(object sender, EventArgs e)
+{
+  //方法1 - 手動關閉連線
+  SqlConnection con = CreateConnection();
+  
+  try
+  {
+    con.Open();
+  }
+  catch (Exception ex)
+  {
+    throw ex;
+  }
+  finally
+  {
+    con.Close();
+  }
+  
+  //方法2 - 使用using
+  using (SqlConnetion con = CreateConnection())
+  {
+    try
+    {
+      con.Open();
+    }
+    catch (Exception ex)
+    {
+      throw ex;
+    }
+  }
+}
+```
+
+	
+
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
