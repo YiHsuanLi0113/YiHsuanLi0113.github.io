@@ -13,6 +13,9 @@ twitter_username: No Twitter
 github_username:  YiHsuanLi0113
 gplus_username:  No gplus
 
+#Style settings
+highlighter: rouge
+
 # Google-analytics
 google-analytics:
   id: ""
