@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+(setq markdown-css-paths '("/assets/css/markdown8.css"))
 
 ### 2018.05.12 - First Time to Use Github Page
 
