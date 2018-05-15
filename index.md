@@ -237,30 +237,60 @@ protected void btnUpdate_Click(object sender EventArgs e)
 	}
 }
 ```
+##### UpdateBatchSize批次更新
 
-### Markdown
+執行Update()，是將已變更之資料列，row by row更新至資料庫
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+我們可以設定UpdateBatchSize屬性，將單次傳送筆數增加，以增加效能
+
+* UpdateBatchSize = 1 預設值
+
+* UpdateBatchSize = 0 無限制
+
+* UpdateBatchSize = n n筆
+
+###### RowUpdateEvent
+
+取得 SQL 陳述式 (Statement) 的執行所變更、插入或刪除的資料列數目
 
 ```csharp
-Syntax highlighted code block
-Console.WriteLine("Hello World");
+protected void btnBatch_Click(object sender, EventArgs e)
+{
+	using (SqlConnection con = new SqlConnection(connectString))
+	{
+		con.Open();
+		
+		SqlCommand cmd = con.CreateCommand();
+		cmd.CommandType = CommandType.Text;
+		cmd.CommandText = "Select * From PLI_PDT_M";
+		
+		SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+		SqlCommandBuilder cmdBuilder = new SqlCommandBuilder(adapter);
+		DataSet ds = new DataSet();
+		adapter.Fill(ds);
+		
+		//更新三筆資料
+		ds.Table[0].Rows[0]["PDT_NAME"] = ds.Table[0].Rows[0]["PDT_NAME"].ToString() + "_1";	
+		ds.Table[0].Rows[0]["PDT_NAME"] = ds.Table[0].Rows[0]["PDT_NAME"].ToString() + "_2";
+		ds.Table[0].Rows[0]["PDT_NAME"] = ds.Table[0].Rows[0]["PDT_NAME"].ToString() + "_3";
+		
+		//觀察更新事件
+		adapter.RowUpdate += SqlRowUpdated;
+		
+		//設定批次更新之單次傳送筆數
+		adapter.UpdateBatchSize = 2;
+		adapter.Update(ds);
+	}
+}
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+//第一次 RecordsAffected = 2
+//第二次 RecordsAffected = 1
+protected void SqlRowUpdated(object sender, SqlRowUpdateEventArgs e)
+{
+	DataRow dr = e.Row;
+	Console.WriteLine(e.RecordsAffected.ToString());
+}
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
 
