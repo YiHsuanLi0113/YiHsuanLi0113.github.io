@@ -299,6 +299,42 @@ protected void SqlRowUpdated(object sender, SqlRowUpdateEventArgs e)
 }
 ```
 
+#### Transaction物件
+
+```csharp
+protected void btnTransaction_Click(object sender EventArgs e)
+{
+	using (SqlConnetcion con = new SqlConnection(connectionString))
+	{
+		con.Open();
+		
+		SqlTransaction tran = con.BeginTransaction();
+		
+		try
+		{
+			SqlCommand cmd = new SqlCommand();
+			
+			//connection及transaction都需指定給command	
+			cmd.Connection = con;
+			cmd.Transaction = transaction;
+			
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.CommandText = "stp_Test1";
+			cmd.ExecuteNonQuery();
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.CommandText = "stp_Test2";
+			cmd.ExecuteNonQuery();
+			
+			tran.Commit();
+		}
+		catch
+		{
+			tran.Rollback(); //一個單元失敗，就全數復原
+		}
+	}
+}
+```
+
 ### 資料庫正規化 Normal Form [請參閱 資料庫正規化](http://job.achi.idv.tw/2013/04/21/database-normalization/)
 
 最近聽到前輩提到正規化，驚! 我才發現我想不起來這名詞是在做什麼的
@@ -332,3 +368,150 @@ EX :   訂單編號  |  客戶名稱  |  單價  |  數量  |  小計
 小計 = 單價 * 數量 
 
 「小計」相依於非鍵欄位「單價」及「數量」，故不符合3NF，須將小計剔除
+
+
+
+
+### C\#存取詞
+
+* private : 私有型別，僅自身內部類別可存取
+
+* public : 公用型別，自身及外部其他類別皆可存取
+
+* protected : 保護型別，自身及繼承之子類別可存取
+
+
+
+
+### Partial Class
+
+當定義好介面，而有一人以上需要同時開發同個時做類別；或者某個實作類別的功能，有些需要撰寫較多的商業邏輯。此時就可以使用Partial Class，以達成多公及好維護的目的。
+
+###### ITime.cs
+```csharp
+public interface IGetTime
+{
+	string GetNow();
+	string GetDate();
+}
+```
+
+###### GetTime.cs
+```csharp
+public partial class GetTime:IGetTime
+{
+	return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+}
+```
+
+###### GetTimeForSome.cs
+```csharp
+public partial class GetTime
+{
+	return DateTime.Now.ToString("yyyy-MM-dd");
+}
+```
+
+###### Form1.cs
+```csharp
+public partial class Form1: Form
+{
+	public Form1()
+	{
+		InitializeComponent();
+	}
+	
+	private void GetNow_Click(object sender, EventArgs)
+	{
+		GetTime t = new GetTime();
+		MessageBox.Show(t.GetNow());
+	}
+	
+	private void GetDate_Click(object sender, EventArgs e)
+	{
+		GetTime g = new GetTime();
+		MessageBox.Show(g.GetDate());
+	}
+}
+```
+
+
+
+
+### Static (請參閱 [一秒看破static](http://weisnote.blogspot.tw/2012/08/static.html))
+
+* 靜態成員：
+
+  * 靜態方法 屬於「類別」所有
+  * 不需要實體(Instance)即可進行訪問
+  * 靜態並非沒有實體，而是只有一個實體，在程式執行之初即建立
+  * 若使用過多靜態成員，易造成不必要的記憶體浪費
+  * 靜態類別內不得有非靜態成員
+  
+* 非靜態成員：
+
+  * 非靜態方法 屬於「實體」所有
+  * 需要new一個實體(Instance)才可進行訪問
+
+**** 說明1
+
+```csharp
+public class NotStaticClass {
+
+	public static void StaticMethod() {
+		// TODO.
+	}
+	
+	public void NotStaticMethod() {
+		// TODO.
+	}
+}
+```
+
+```csharp
+//非靜態方法 只有該類別實例可執行
+NotStaticClass notStaticClass = new NotStaticClass();
+notStaticClass.NotStaticMethod();
+
+//靜態方法 
+NotStaticClass.StaticMethod();
+```
+
+#### 說明2
+
+```csharp
+public static class StaticClass
+{
+	//靜態類別中僅能存在靜態成員
+	public static string userName = "AAA";
+	
+	public static void Login()
+	{
+		// TODO.
+	}
+}
+
+public class NotStaticClass
+{
+	public static string userName2 = "BBB";
+	public void Logout()
+	{
+		// TODO.
+	}
+}
+
+class Program
+{
+	static void Main(string[] args)
+	{
+		Console.WriteLine(StaticClass.userName);
+		Console.WriteLine(StaticClass.Login());
+		
+		Console.WriteLine(NotStaticClass.userName2);
+		
+		NotStaticClass nsc = new NotStaticClass();
+		Console.WriteLine(NotStaticClass.Logout());
+	}
+}
+```
+
