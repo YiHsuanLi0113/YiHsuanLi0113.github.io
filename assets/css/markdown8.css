@@ -16,8 +16,9 @@ th {
 }
 
 h1, h2, h3, h4, h5, h6 {
-   color: #404040;
-   line-height: 36px;
+   color: #858585;
+   line-height: 40px;
+   font-family: Microsoft JhengHei;
 }
 h1 {
    margin-bottom: 18px;
@@ -64,7 +65,7 @@ blockquote p {
    font-style: italic;
 }
 code, pre {
-   font-family: Monaco, Andale Mono, Courier New, monospace;
+   font-family: Consolas, Monaco, Andale Mono, Courier New, monospace;
 }
 code {
    background-color: #fee9cc;
