@@ -10,6 +10,7 @@
 
 ***
 
+
 ## 資源連結整理
 
 ### UI 好用網站懶人包
@@ -17,6 +18,7 @@
 1.今天在研究這個jekyll theme，發現這個好用的網站[DEVICON](http://konpa.github.io/devicon/)-免費的程式語言、設計、開發工具圖示集. 
 
 ***
+
 
 ## programming筆記
 
@@ -32,6 +34,8 @@
     
     
 ◆ 弱型別：以object當變數型別、無法明確表達runtime變數型別者皆屬之
+
+
 
 ### ADO.NET (請參閱 [VITO學習筆記:使用ADO.NET Conneted類別](http://vito-note.blogspot.tw/2012/09/adonet-connected.html)、 [何謂ADO.NET-藍色小舖](http://www.blueshop.com.tw/board/FUM201412241618269T8/BRD20151103140432TEC.html))
 
