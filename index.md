@@ -335,6 +335,28 @@ protected void btnTransaction_Click(object sender EventArgs e)
 }
 ```
 
+#### 常見錯誤
+
+##### Fill: SelectCommand.Connection 屬性尚未初始化。
+```csharp
+using (SqlConnection conn = new SqlConnection(connectionString))
+{
+	try
+	{
+		conn.Open();
+		
+		SqlCommand cmd = new SqlCommand();
+		cmd.CommandType = CommandType.Text;
+		
+		// 指定連線後，解決 Fill: SelectCommand.Connection 屬性尚未初始化。
+		cmd.Connection = conn;
+		cmd.CommandText = "Select (PD_PDTCODE + '   ' + PD_PDTNAME) As fullName From PLI_PDT_M Where PK_CLASS < 21";
+	}
+}
+```
+
+
+
 ### 資料庫正規化 Normal Form [請參閱 資料庫正規化](http://job.achi.idv.tw/2013/04/21/database-normalization/)
 
 最近聽到前輩提到正規化，驚! 我才發現我想不起來這名詞是在做什麼的
