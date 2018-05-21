@@ -537,3 +537,41 @@ class Program
 }
 ```
 
+
+
+### HTML - X-UA-Compatible設置IE兼容模式 (請參閱 [黑暗執行緒-搞懂X-UA0Competible相容設定](http://blog.darkthread.net/post-2016-05-26-x-ua-compatible-setting.aspx))
+
+#### IE包含三種文件模式
+
+* Standard Mode(標準模式) : 盡力支援最新HTML5/CSS3/SVG等標準。但不同版本IE支持程度不同
+* Quirks Mode(接縫模式) : 力求相容較早版本瀏覽器行為。
+* Almost-Standards Mode(準標準模式) : 支援最新標準，但保有先前版本的圖形渲染行為
+
+#### HTML控制文件模式
+
+<!DOCTYPE>及<meta http-equiv="X-UA-Compatible">皆可控制，而IE套用原則為:
+
+* 若網頁同時有<!DOCTYPE>及<meta http-equiv="X-UA-Compatible">，以meta為準
+* 若瀏覽器支援<meta http-equiv="X-UA-Compatible">，但不支援meta指定之文件模式，將採用最高文件標準(IE=Edge)
+* 舊版瀏覽器如不支援<meta http-equiv="X-UA-Compatible">，由<!DOCTYPE>決定
+* IE9(含)以前會以IE5(Quirks Mode)顯示沒有標示<!DOCTYPE>的網頁，建議網頁一律加<!DOCTYPE html>
+
+<meta http-equiv="X-UA-Compatible">應放置於<header>區前段，其上僅允許存在其他meta Header或<title>
+	
+#### X-UA-Compatible Header寫法
+
+* 限制IE使用IE9/IE8/IE7標準模式
+  <meta http-equiv="X-UA-Compatible" content="IE=9">
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <meta http-equiv="X-UA-Compatible" content="IE=7">
+
+* EmulateIE*
+  EmulateIE* 效果視<!DOCTYPE>宣告而定，若依宣告使用標準模式，則IE會依EmulateIE* 決定使用IE9/8/7標準模式；若網頁缺少<!DOCTYPE>宣告   則進入Quirks Mode(IE5)
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+  
+#### 實驗參考程式
+
+[JSbin](http://jsbin.com/ozejuk/1/edit?html,output)
+
