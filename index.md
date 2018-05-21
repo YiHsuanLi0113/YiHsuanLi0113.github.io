@@ -636,3 +636,72 @@ function Hello2(){alert('This is Startup')}//]]>
 </script>
 </form>
 ```
+
+
+### 常數const及static readonly C# (請參閱 [常數const和static readonly](http://sweetkikibaby.pixnet.net/blog/post/191538132-%E5%B8%B8%E6%95%B8const%E5%92%8Cstatic-readonly))
+
+* const : 編譯時期常數(靜態常數)
+  public const int a = 10;
+  
+* readonly : 執行階段常數(動態常數)
+  public static readonly int b = 0;
+  
+重點:
+
+1. 二者皆以類別名稱訪問
+2. const無內存消耗；readonly因需保存常數，則有
+3. const在宣告時就要初始化(指定值)；readonly則可延遲至建構子中再初始化
+
+#### 實例1
+
+##### Class1.cs
+```csharp
+  public class Class1
+  {
+  	\\必先指定值
+  	public const int a = b * 10; 
+        public const int b = 5; 
+  }
+```
+
+##### aspx.cs
+```csharp
+public partial class _Default : Page
+{
+	protected void Page_Load(object sender, EventArgs e)
+        {
+		int c = Class1.a + Class1.b;
+        }
+}
+```
+
+輸出結果 a = 50, b = 5, c = 55
+
+
+#### 實例2
+
+##### Class1.cs
+```csharp
+  public class Class1
+  {
+  	\\必先指定值
+  	public static readonly int a = b * 10; 
+        public static readonly int b = 5; 
+  }
+```
+
+##### aspx.cs
+```csharp
+public partial class _Default : Page
+{
+	protected void Page_Load(object sender, EventArgs e)
+        {
+		int c = Class1.a + Class1.b;
+        }
+}
+```
+
+輸出結果 a = 0, b = 5, c = 5
+(readonly為動態常數，變數值在編譯期間不予解析，所以起初接為預設值(a,b = 0)。
+而執行至a = b * 10, 因為b初始值為0，所以a = 0 * 10 = 0
+接著執行至b = 5，才會將 b 的設定值(5)賦予 b)
