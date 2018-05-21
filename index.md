@@ -539,7 +539,7 @@ class Program
 
 
 
-### HTML - X-UA-Compatible設置IE兼容模式 (請參閱 [黑暗執行緒-搞懂X-UA0Competible相容設定](http://blog.darkthread.net/post-2016-05-26-x-ua-compatible-setting.aspx))
+### HTML - X-UA-Compatible設置IE兼容模式 (請參閱 [黑暗執行緒-搞懂X-UA-Competible相容設定](http://blog.darkthread.net/post-2016-05-26-x-ua-compatible-setting.aspx))
 
 #### IE包含三種文件模式
 
@@ -575,3 +575,64 @@ class Program
 
 [JSbin](http://jsbin.com/ozejuk/1/edit?html,output)
 
+
+
+
+### 動態註冊JavaScript至Client端 (請參閱[式門遁甲-(ASP.NET)動態註冊JavaScript至Client端](http://welkingunther.pixnet.net/blog/post/27831277-%28asp.net%29%E5%8B%95%E6%85%8B%E8%A8%BB%E5%86%8Ajavascript%E8%87%B3client%E7%AB%AF))
+
+* RegisterClientScriptBlock : 將JavaScript寫至Client端HTML裡的<form>以下
+* RegisterClientStartupScript : 將JavaScript寫至Client端HTML裡的</form>以上
+* RegisterClientScriptInclude : 將外部JavaScript引入，該script寫至Client端HTML裡的<form>以下
+	
+出現順序 : Block > Include > Startup
+
+##### .aspx
+```csharp
+    <button runat="server" id="bntTest" onclick="Hello1()">Hello1</button>
+    <button runat="server" id="btnTest2" onclick="Hello2()">Hello2</button>
+    <button runat="server" id="btnTest3" onclick="Hello3()">Hello3</button>
+```
+
+##### .aspx.cs
+```csharp
+    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "test1", "function Hello1(){alert('This is Block')}", true);
+    Page.ClientScript.RegisterStartupScript(this.GetType(), "test2", "function Hello2(){alert('This is Startup')}", true);
+    Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "test2", Page.ResolveUrl("~/test/test.js"));
+```
+
+##### RegisterClientScriptInclude註冊之.js
+```javascript
+    function Hello3()
+    {
+        alert('This is Include');
+    }
+```
+
+##### 實際測試結果(部分程式省略)
+```csharp
+<body>
+    <form method="post" action="./" id="ctl01">
+<script type="text/javascript">
+//<![CDATA[
+function Hello1(){alert('This is Block')}//]]>
+</script>
+
+<script src="/test/test.js" type="text/javascript"></script>
+
+        <div class="container body-content">
+            
+
+    <button id="MainContent_bntTest" onclick="Hello1()">Hello1</button>
+    <button id="MainContent_btnTest2" onclick="Hello2()">Hello2</button>
+    <button id="MainContent_btnTest3" onclick="Hello3()">Hello3</button>
+
+
+        </div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+function Hello2(){alert('This is Startup')}//]]>
+</script>
+</form>
+```
